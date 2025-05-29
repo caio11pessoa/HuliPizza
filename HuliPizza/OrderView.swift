@@ -10,24 +10,36 @@ import SwiftUI
 struct OrderView: View {
     var orders: [Int]
     var body: some View {
-        VStack{
-            Label {
-                Text(59.99, format: .currency(code: "Brl"))
-            } icon: {
-                
-                Image(systemName: orders.isEmpty ? "cart" : "cart.fill")
+        ZStack(alignment: .top) {
+            ScrollView{
+                ForEach(orders, id: \.self  ){ order in
+                    OrderRowView(order: order)
+                        .padding(4)
+                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 10))
+                        .shadow(radius: 10)
+                        .padding(.bottom ,5)
+                        .padding([.leading ,.trailing], 7)
+                    
+                }
             }
+            .padding(.top, 65)
             HStack {
                 Text("Order Pizza")
                     .font(.title)
                 Spacer()
-            }
-            ScrollView{
-                ForEach(orders, id: \.self  ){ order in
-                    OrderRowView(order: order)
+                Label {
+                    Text(59.99, format: .currency(code: "Brl"))
+                } icon: {
+                    
+                    Image(systemName: orders.isEmpty ? "cart" : "cart.fill")
                 }
             }
+            .padding()
+            .background(.ultraThinMaterial)
+            
         }
+        .padding()
+        .background(Color.surf)
     }
 }
 
